@@ -1,0 +1,51 @@
+[package]
+name = "Memoria-bootstrapper"
+version = "0.1.0"
+edition = "2021"
+description = "Official Memoria client bootstrapper"
+autobins = false
+
+[lib]
+name = "Memoria_bootstrapper"
+path = "src/lib.rs"
+
+[[bin]]
+name = "MemoriaPlayerLauncher"
+path = "src/main.rs"
+
+[[bin]]
+name = "MemoriaStudioLauncher"
+path = "src/main_studio.rs"
+
+[dependencies]
+eframe        = { version = "0.27", default-features = false, features = ["glow", "default_fonts", "wayland", "x11"] }
+egui          = "0.27"
+egui_extras   = { version = "0.27", features = ["image"] }
+image         = { version = "0.25", default-features = false, features = ["png"] }
+anyhow        = "1"
+log           = "0.4"
+env_logger    = "0.11"
+percent-encoding = "2"
+serde         = { version = "1", features = ["derive"] }
+reqwest       = { version = "0.12", default-features = false, features = ["blocking", "rustls-tls", "stream"] }
+zip           = { version = "2", default-features = false, features = ["deflate"] }
+directories   = "5"
+sha1          = "0.10"
+hex           = "0.4"
+
+discord-rich-presence = "0.2"
+
+[target.'cfg(windows)'.dependencies]
+winreg = "0.52"
+windows-sys = { version = "0.52", features = ["Win32_Foundation", "Win32_Graphics_Dwm", "Win32_UI_WindowsAndMessaging", "Win32_System_Threading", "Win32_System_Diagnostics_ToolHelp"] }
+
+[build-dependencies]
+image  = { version = "0.25", default-features = false, features = ["png"] }
+ico    = "0.3"
+
+[profile.release]
+opt-level     = "z"
+lto           = true
+codegen-units = 1
+strip         = true
+panic         = "abort"
